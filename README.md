@@ -1,9 +1,9 @@
 # Schedule Now - Flutter Application
 
-<img src='lib/screenshots/login.png' heigth='300' width='250'> <img src='lib/screenshots/register.png' heigth='300' width='250'>
-<img src='lib/screenshots/home.png' heigth='300' width='250'> <img src='lib/screenshots/services.png' heigth='300' width='250'>
-<img src='lib/screenshots/professional.png' heigth='300' width='250'> <img src='lib/screenshots/calendar.png' heigth='300' width='250'>
-<img src='lib/screenshots/scheduless.png' heigth='300' width='250'>
+<img src='lib/github/images/login.PNG' heigth='300' width='250'> <img src='lib/github/images/register.PNG' heigth='300' width='250'>
+<img src='lib/github/images/home.PNG' heigth='300' width='250'> <img src='lib/github/images/services.PNG' heigth='300' width='250'>
+<img src='lib/github/images/professional.PNG' heigth='300' width='250'> <img src='lib/github/images/calendar.PNG' heigth='300' width='250'>
+<img src='lib/github/images/scheduless.PNG' heigth='300' width='250'>
 
 
 ## Sobre este projeto
@@ -13,7 +13,7 @@ A ideia do app é possibilitar a clientes de salão de beleza e estética marcar
 ## Porque ?
 
 Esse projeto foi feito como estudo de caso para uma Iniciação Científica na faculdade UNICENTRO. A pesquisa aborda sobre o uso de restrições em modelos para interfaces de aplicações móveis.
-O projeto também ajudou muito para melhorar minhas qualidades no desenvolvimento mobile, com Flutter.
+O projeto também ajudou muito para melhorar minhas habilidades no desenvolvimento mobile, com Flutter.
 
 ## Funcionalidades
 
