@@ -1,9 +1,9 @@
 # Schedule Now - Flutter Application
 
-<img src='lib/github/images/login.png' heigth='300' width='250'> <img src='lib/github/images/register.png' heigth='300' width='250'>
-<img src='lib/github/images/home.png' heigth='300' width='250'> <img src='lib/github/images/services.png' heigth='300' width='250'>
-<img src='lib/github/images/professional.png' heigth='300' width='250'> <img src='lib/github/images/calendar.png' heigth='300' width='250'>
-<img src='lib\github\images\scheduless.png' heigth='300' width='250'>
+<img src='lib/github/images/login.PNG' heigth='300' width='250'> <img src='lib/github/images/register.PNG' heigth='300' width='250'>
+<img src='lib/github/images/home.PNG' heigth='300' width='250'> <img src='lib/github/images/services.PNG' heigth='300' width='250'>
+<img src='lib/github/images/professional.PNG' heigth='300' width='250'> <img src='lib/github/images/calendar.PNG' heigth='300' width='250'>
+<img src='lib/github/images/scheduless.PNG' heigth='300' width='250'>
 
 
 
