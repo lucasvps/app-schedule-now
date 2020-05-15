@@ -26,4 +26,4 @@ O projeto também ajudou muito para melhorar minhas habilidades no desenvolvimen
 
 ## Serviços
 
-O Back-End do aplicativo foi feito em PHP + LARAVEL. Está hospedado no heroku e também disponível no github em : *link aqui*
+O Back-End do aplicativo foi feito em PHP + LARAVEL. Está hospedado no heroku e também disponível no github em : https://github.com/lucasvps/api-schedule-now
