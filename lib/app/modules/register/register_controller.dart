@@ -24,7 +24,7 @@ abstract class _RegisterControllerBase with Store {
   
 
   // Registrar novo usuario
-  registerClient(ClienteModel data) {
+  Future registerClient(ClienteModel data) {
     return repository.registerUser(data);
   }
 

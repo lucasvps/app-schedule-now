@@ -1,4 +1,4 @@
-import 'package:app_schedule_now/app/components/widgets.dart';
+import 'package:app_schedule_now/app/components/shared_widgets.dart';
 import 'package:app_schedule_now/app/models/client_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -37,17 +37,17 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  Future<void> showSnackBar(String content) {
-    final snackBarContent = SnackBar(
-      backgroundColor: Colors.green,
-      duration: Duration(seconds: 2),
-      content: Text(
-        content,
-        textAlign: TextAlign.center,
-      ),
-    );
-    _scaffoldkey.currentState.showSnackBar(snackBarContent);
-  }
+  // Future<void> showSnackBar(String content) {
+  //   final snackBarContent = SnackBar(
+  //     backgroundColor: Colors.green,
+  //     duration: Duration(seconds: 2),
+  //     content: Text(
+  //       content,
+  //       textAlign: TextAlign.center,
+  //     ),
+  //   );
+  //   _scaffoldkey.currentState.showSnackBar(snackBarContent);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           fit: BoxFit.fill,
                           image: new NetworkImage(
                               "https://image.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg")))),
-              _sized(),
+              Components.sized(),
               Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -101,7 +101,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                               errorText: controller.validateMailController);
                         },
                       ),
-                      _sized(),
+                      Components.sized(),
                       Observer(
                         builder: (_) {
                           return textField(
@@ -111,9 +111,10 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                               errorText: controller.validatePassController);
                         },
                       ),
-                      _sized(),
+                      Components.sized(),
                       Observer(builder: (_) {
                         return _button(
+                          context: context,
                           text: "Realizar login",
                         );
                       }),
@@ -128,7 +129,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
   //
 
-  Widget _button({String text}) {
+  Widget _button({String text, BuildContext context}) {
     String stts;
     return RaisedButton(
         child: Text(text),
@@ -140,45 +141,20 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     password: controller.client.password);
 
                 controller.loginUser(data).then((response) {
-                  
                   controller.recoveredUser();
                   stts = response.toString();
-                  print('home page $stts');
+
                   if (stts != '200') {
-                    _alert();
+                    Components.alert(
+                        context,
+                        'Não foi possivel realizar login!',
+                        'Email ou senha estão incorretos, tente novamente!', 'login');
                   } else {
-                    showSnackBar('Login realizado com sucesso!');
+                    Components.showSnackBar('Login realizado com sucesso!', _scaffoldkey);
                   }
                 });
               }
             : null);
-  }
-
-  Widget _sized() {
-    return SizedBox(
-      height: 20,
-    );
-  }
-
-  Future _alert() {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return AlertDialog(
-            title: Text("Não foi possivel realizar login!"),
-            content: Container(
-              child: Text("Email ou senha incorretos!"),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"))
-            ],
-          );
-        });
   }
 
   Widget textField(

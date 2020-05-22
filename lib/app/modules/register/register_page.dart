@@ -1,4 +1,4 @@
-import 'package:app_schedule_now/app/components/widgets.dart';
+import 'package:app_schedule_now/app/components/shared_widgets.dart';
 import 'package:app_schedule_now/app/models/client_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,20 +23,11 @@ class _RegisterPageState
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  Future<void> showSnackBar(String content){
-    final snackBarContent = SnackBar(
-      backgroundColor: Colors.green,
-      duration: Duration(seconds: 2),
-      content: Text(content, textAlign: TextAlign.center,),
-    );
-
-     _scaffoldkey.currentState.showSnackBar(snackBarContent);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldkey,
+        key: _scaffoldkey,
         backgroundColor: Color.fromARGB(255, 203, 236, 241),
         appBar: GradientAppBar(
           actions: <Widget>[
@@ -112,7 +103,7 @@ class _RegisterPageState
                     ),
                     _sized(40),
                     Observer(builder: (_) {
-                      return _button();
+                      return _button(context: context);
                     })
                   ],
                 ),
@@ -122,7 +113,8 @@ class _RegisterPageState
         ));
   }
 
-  Widget _button() {
+  Widget _button({BuildContext context}) {
+    String statusCode;
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: RaisedButton(
@@ -134,11 +126,20 @@ class _RegisterPageState
                     password: controller.client.password,
                     phone: controller.client.phone);
 
-                controller.registerClient(data).then((_){
-                  controller.recoveredUser();
-                  showSnackBar("Cadastro realizado com sucesso!");
+                controller.registerClient(data).then((response) {
+                  statusCode = response.toString();
+                  if (statusCode != '200') {
+                    Components.alert(
+                        context,
+                        'Não foi possivel realizar o cadastro!',
+                        'Este email já está em uso!',
+                        'register');
+                  } else {
+                    Components.showSnackBar(
+                        "Cadastro realizado com sucesso!", _scaffoldkey);
+                    controller.recoveredUser();
+                  }
                 });
-                
               }
             : null,
         child: Text("Registrar"),
@@ -166,7 +167,8 @@ class _RegisterPageState
         decoration: BoxDecoration(
             shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(30)),
         child: Observer(builder: (_) {
-          return TextField(
+          return TextFormField(
+            initialValue: "",
             keyboardType: type,
             onChanged: onChanged,
             obscureText: controller.isObscure,
@@ -181,7 +183,6 @@ class _RegisterPageState
                         onPressed: controller.changeVisibility),
                 prefixIcon: Icon(icon),
                 errorText: errorText(),
-                errorStyle: TextStyle(),
                 hintText: icon == Icons.phone ? "(00) 00000-0000" : "",
                 labelText: "$label",
                 labelStyle: TextStyle(color: Colors.black)),

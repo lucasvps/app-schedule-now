@@ -1,4 +1,4 @@
-import 'package:app_schedule_now/app/components/widgets.dart';
+import 'package:app_schedule_now/app/components/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -26,17 +26,6 @@ class _AppointmentsPageState
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  Future<void> showSnackBar(String content) {
-    final snackBarContent = SnackBar(
-      backgroundColor: Colors.green,
-      duration: Duration(seconds: 2),
-      content: Text(
-        content,
-        textAlign: TextAlign.center,
-      ),
-    );
-    _scaffoldkey.currentState.showSnackBar(snackBarContent);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +290,7 @@ class _AppointmentsPageState
                       stts = _.toString();
                       if (stts == '200') {
                         Modular.to.pop();
-                        showSnackBar("Horário cancelado com sucesso!");
+                        Components.showSnackBar("Horário cancelado com sucesso!", _scaffoldkey);
                         Future.delayed(Duration(seconds: 1)).then((_) {
                           Modular.to.pushNamedAndRemoveUntil(
                               '/card', ModalRoute.withName('/'));

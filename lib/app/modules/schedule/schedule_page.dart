@@ -1,4 +1,4 @@
-import 'package:app_schedule_now/app/components/widgets.dart';
+import 'package:app_schedule_now/app/components/shared_widgets.dart';
 import 'package:app_schedule_now/app/models/professional_model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -59,22 +59,6 @@ class _SchedulePageState
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                // Container(
-                                //   width:
-                                //       MediaQuery.of(context).size.width * 0.39,
-                                //   height:
-                                //       MediaQuery.of(context).size.width * 0.39,
-                                //   decoration: new BoxDecoration(
-                                //       shape: BoxShape.circle,
-                                //       image: DecorationImage(
-                                //           fit: BoxFit.fill,
-                                //           image: AssetImage(
-                                //               'lib/app/assets/women.png'))),
-                                // ),
-                                // SizedBox(
-                                //   height:
-                                //       MediaQuery.of(context).size.width * 0.1,
-                                // ),
                                 dropDownMenu(snapshot.data),
                               ],
                             ),
@@ -146,7 +130,8 @@ class _SchedulePageState
                       ),
                       onChanged: (_) async {
                         controller.professional.setProfName(_);
-                        int id = await controller.getId(_);
+                        String idString = await controller.getId(_);
+                        int id = int.parse(idString);
                         controller.professional.setProfId(id);
                         controller.makeScheduleClient.setScheduleProfName(_);
                       },

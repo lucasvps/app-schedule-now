@@ -1,4 +1,4 @@
-import 'package:app_schedule_now/app/components/widgets.dart';
+import 'package:app_schedule_now/app/components/shared_widgets.dart';
 import 'package:app_schedule_now/app/models/make_schedule_client_model.dart';
 import 'package:app_schedule_now/app/models/make_schedule_professional_model.dart';
 import 'package:app_schedule_now/app/models/recover_client_model.dart';
@@ -24,17 +24,7 @@ class _TimePageState extends ModularState<TimePage, ScheduleController> {
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  Future<void> showSnackBar() {
-    final snackBarContent = SnackBar(
-      backgroundColor: Colors.green,
-      duration: Duration(seconds: 2),
-      content: Text(
-        "Horário marcado com sucesso!",
-        textAlign: TextAlign.center,
-      ),
-    );
-    _scaffoldkey.currentState.showSnackBar(snackBarContent);
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +227,7 @@ class _TimePageState extends ModularState<TimePage, ScheduleController> {
                     controller.makeScheduleProfessional(
                         data2, controller.professional.id.toString());
                     Navigator.of(context).pop();
-                    showSnackBar();
+                    Components.showSnackBar("Horário marcado com sucesso!", _scaffoldkey);
                     Future.delayed(Duration(seconds: 2)).then((_) {
                       Modular.to.pushNamedAndRemoveUntil(
                           '/card', ModalRoute.withName('/'));

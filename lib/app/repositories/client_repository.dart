@@ -91,6 +91,21 @@ class ClientRepository extends Disposable {
 
   // **********************************************************************************************************************
 
+  // Cancelar um horário marcado do cliente.
+  Future cancelSchedule(String id) async {
+    String url = ApiConstants.MAIN_URL + ApiConstants.CANCEL_SCHEDULE + '/$id';
+
+    String url2 =
+        ApiConstants.MAIN_URL + ApiConstants.CANCEL_SCHEDULE_PROF + '/$id';
+
+    var response = await http.delete(url, headers: header);
+
+    var response2 = await http.delete(url2, headers: header);
+
+    return response.statusCode;
+  }
+
+
   // Recuperar dados usuario logado
   Future recoverUser() async {
     String recoverData = ApiConstants.MAIN_URL + ApiConstants.RECOVER_URL;
@@ -228,18 +243,7 @@ class ClientRepository extends Disposable {
     return schedulesDone;
   }
 
-  Future cancelSchedule(String id) async {
-    String url = ApiConstants.MAIN_URL + ApiConstants.CANCEL_SCHEDULE + '/$id';
-
-    String url2 =
-        ApiConstants.MAIN_URL + ApiConstants.CANCEL_SCHEDULE_PROF + '/$id';
-
-    var response = await http.delete(url, headers: header);
-
-    var response2 = await http.delete(url2, headers: header);
-
-    return response.statusCode;
-  }
+  
 
   //dispose will be called automatically
   @override

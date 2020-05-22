@@ -13,16 +13,12 @@ class CustomDio {
   }
 
   CustomDio.withAuthentication() {
-    print('custom dio auth');
     _dio = Dio();
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: _onRequest, onError: _onError));
   }
 
   _onError(DioError e) async {
-    print(e);
-    print(e.error);
-    print(e.type);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
     prefs.commit();
@@ -35,7 +31,6 @@ class CustomDio {
   _onRequest(RequestOptions options) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
-    print(token);
 
     options.headers['Authorization'] = "Bearer $token";
     options.headers['Accept'] = 'application/json';
