@@ -143,6 +143,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                   
                   controller.recoveredUser();
                   stts = response.toString();
+                  print('home page $stts');
                   if (stts != '200') {
                     _alert();
                   } else {

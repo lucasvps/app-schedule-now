@@ -4,6 +4,7 @@ import 'package:app_schedule_now/app/models/client_model.dart';
 import 'package:app_schedule_now/app/models/list_schedules_client_model.dart';
 import 'package:app_schedule_now/app/models/recover_client_model.dart';
 import 'package:app_schedule_now/app/shared/constants.dart';
+import 'package:app_schedule_now/app/shared/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
@@ -24,24 +25,20 @@ class ClientRepository extends Disposable {
   Future registerUser(ClienteModel data) async {
     String registerUrl = ApiConstants.MAIN_URL + ApiConstants.REGISTER_CLIENT;
 
-    var preferences = await SharedPreferences.getInstance();
+    var dio = CustomDio().instance;
 
-    var register = null;
+    return await dio
+        .post(registerUrl, data: data.toJson())
+        .then((response) async {
+      var preferences = await SharedPreferences.getInstance();
+      preferences.setString("token", response.data['token']);
+      Future.delayed(Duration(seconds: 2)).then((_) {
+        Modular.to.pushReplacementNamed('/card');
+      });
 
-    return await http
-        .post(registerUrl, headers: header, body: json.encode(data.toJson()))
-        .then((data) {
-      if (data.statusCode == 200) {
-        register = json.decode(data.body);
-        if (register != null) {
-          preferences.setString("token", register['token']);
-          Future.delayed(Duration(seconds: 2)).then((_) {
-            Modular.to.pushReplacementNamed('/card');
-          });
-        }
-      }
-
-      return data.statusCode;
+      return response.statusCode;
+    }).catchError((e) {
+      return null;
     });
   }
 
@@ -49,24 +46,20 @@ class ClientRepository extends Disposable {
   Future loginUser(ClienteModel data) async {
     String loginUser = ApiConstants.MAIN_URL + ApiConstants.LOGIN_URL;
 
-    var preferences = await SharedPreferences.getInstance();
+    var dio = CustomDio().instance;
 
-    var response = null;
+    return await dio
+        .post(loginUser, data: data.toJsonLogin())
+        .then((value) async {
+      var preferences = await SharedPreferences.getInstance();
+      preferences.setString("token", value.data['token']);
+      Future.delayed(Duration(seconds: 2)).then((_) {
+        Modular.to.pushReplacementNamed('/card');
+      });
 
-    return await http
-        .post(loginUser, headers: header, body: json.encode(data.toJsonLogin()))
-        .then((data) {
-      if (data.statusCode == 200) {
-        response = json.decode(data.body);
-        if (response != null) {
-          preferences.setString("token", response['token']);
-          Future.delayed(Duration(seconds: 2)).then((_) {
-            Modular.to.pushReplacementNamed('/card');
-          });
-        }
-      }
-
-      return data.statusCode;
+      return value.statusCode;
+    }).catchError((err) {
+      return null;
     });
   }
 
@@ -74,53 +67,29 @@ class ClientRepository extends Disposable {
   Future logoutUser() async {
     String logoutUser = ApiConstants.MAIN_URL + ApiConstants.LOGOUT_URL;
 
-    var prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    var dio = CustomDio.withAuthentication().instance;
 
-    Map<String, String> headerLogout = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
-    };
-
-    return await http.get(logoutUser, headers: headerLogout).then((data) {
-      if (data.statusCode == 200) {
-        Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
-        prefs.clear();
-        prefs.commit();
-      } else {
-        Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
-        prefs.clear();
-        prefs.commit();
-      }
+    return await dio.get(logoutUser).then((response) async {
+      var prefs = await SharedPreferences.getInstance();
+      Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
+      prefs.clear();
+      prefs.commit();
     });
   }
 
   Future resetToken() async {
     String url = ApiConstants.MAIN_URL + ApiConstants.RESET_TOKEN;
 
-    var prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    var dio = CustomDio.withAuthentication().instance;
 
-    Map<String, String> headerReset = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
-    };
-
-    return await http.post(url, headers: headerReset).then((data) {
-      if (data.statusCode == 200) {
-        var response = json.decode(data.body);
-        if (response != null) {
-          prefs.setString("token", response['token']);
-        }
-      } else {
-        Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
-        prefs.clear();
-        prefs.commit();
-      }
+    return await dio.post(url).then((response) async {
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setString("token", response.data['token']);
     });
-  }
+  } 
+
+
+  // **********************************************************************************************************************
 
   // Recuperar dados usuario logado
   Future recoverUser() async {
