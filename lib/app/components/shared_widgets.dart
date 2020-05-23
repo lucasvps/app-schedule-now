@@ -30,12 +30,7 @@ class Components {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    if (route == 'login') {
-                      Navigator.of(context).pop();
-                    } else if (route == 'register') {
-                      Modular.to.pushNamedAndRemoveUntil(
-                          '/register', ModalRoute.withName('/register'));
-                    }
+                    Navigator.of(context).pop();
                   },
                   child: Text("OK"))
             ],

@@ -19,10 +19,13 @@ class CustomDio {
   }
 
   _onError(DioError e) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
-    prefs.commit();
-    Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
+    if (e.response.statusCode == 401) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.clear();
+      prefs.commit();
+      Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/'));
+    }
+
     return e.type;
   }
 
@@ -31,7 +34,6 @@ class CustomDio {
   _onRequest(RequestOptions options) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
-
     options.headers['Authorization'] = "Bearer $token";
     options.headers['Accept'] = 'application/json';
   }
