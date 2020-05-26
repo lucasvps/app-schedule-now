@@ -54,7 +54,7 @@ class ClientRepository extends Disposable {
       var preferences = await SharedPreferences.getInstance();
       preferences.setString("token", value.data['token']);
       Future.delayed(Duration(seconds: 2)).then((_) {
-        Modular.to.pushReplacementNamed('/card');
+        Modular.to.pushNamedAndRemoveUntil('/card', ModalRoute.withName('/card'));
       });
 
       return value.statusCode;
