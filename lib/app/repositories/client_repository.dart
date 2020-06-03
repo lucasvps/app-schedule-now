@@ -5,6 +5,7 @@ import 'package:app_schedule_now/app/models/list_schedules_client_model.dart';
 import 'package:app_schedule_now/app/models/recover_client_model.dart';
 import 'package:app_schedule_now/app/shared/constants.dart';
 import 'package:app_schedule_now/app/shared/custom_dio.dart';
+import 'package:app_schedule_now/app/stores/client_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
@@ -15,11 +16,16 @@ class ClientRepository extends Disposable {
   var client = ClienteModel();
   var recoverClient = RecoverClientModel();
 
+  final ClientStore clientStore;
+  ClientRepository(this.clientStore);
+
   Map<String, String> header = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     //'Authorization' : 'Bearer $preferences.'
   };
+
+  
 
   // REGISTER
   Future registerUser(ClienteModel data) async {

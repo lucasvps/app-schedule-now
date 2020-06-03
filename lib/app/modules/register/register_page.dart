@@ -61,7 +61,7 @@ class _RegisterPageState
                       builder: (_) {
                         return Components.textField(
                             label: "Nome",
-                            onChanged: controller.client.setName,
+                            onChanged: controller.clientStore.setName,
                             errorText: controller.validateNameController,
                             icon: Icons.person,
                             type: TextInputType.text);
@@ -72,7 +72,7 @@ class _RegisterPageState
                       builder: (BuildContext context) {
                         return Components.textField(
                             label: "Email",
-                            onChanged: controller.client.setMail,
+                            onChanged: controller.clientStore.setMail,
                             errorText: controller.validateMailController,
                             icon: Icons.mail,
                             type: TextInputType.emailAddress);
@@ -83,7 +83,7 @@ class _RegisterPageState
                       builder: (BuildContext context) {
                         return textField(
                             label: "Senha",
-                            onChanged: controller.client.setPassword,
+                            onChanged: controller.clientStore.setPassword,
                             errorText: controller.validatePassController,
                             icon: Icons.lock,
                             type: TextInputType.text);
@@ -96,7 +96,7 @@ class _RegisterPageState
                           errorText: controller.validatePhoneController,
                           icon: Icons.phone,
                           label: "Telefone",
-                          onChanged: controller.client.setPhone,
+                          onChanged: controller.clientStore.setPhone,
                           type: TextInputType.phone,
                         );
                       },
@@ -118,13 +118,13 @@ class _RegisterPageState
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: RaisedButton(
-        onPressed: controller.client.isValidRegister
+        onPressed: controller.clientStore.isValidRegister
             ? () {
                 var data = ClienteModel(
-                    name: controller.client.name,
-                    email: controller.client.email,
-                    password: controller.client.password,
-                    phone: controller.client.phone);
+                    name: controller.clientStore.name,
+                    email: controller.clientStore.email,
+                    password: controller.clientStore.password,
+                    phone: controller.clientStore.phone);
 
                 controller.registerClient(data).then((response) {
                   statusCode = response.toString();

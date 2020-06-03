@@ -97,7 +97,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           return Components.textField(
                               label: "Email",
                               icon: Icons.email,
-                              onChanged: controller.client.setMail,
+                              onChanged: controller.repository.clientStore.setMail,
                               errorText: controller.validateMailController);
                         },
                       ),
@@ -107,7 +107,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           return textField(
                               label: "Senha",
                               icon: Icons.lock,
-                              onChanged: controller.client.setPassword,
+                              onChanged: controller.repository.clientStore.setPassword,
                               errorText: controller.validatePassController);
                         },
                       ),
@@ -134,11 +134,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
     return RaisedButton(
         child: Text(text),
         color: Colors.blue[400],
-        onPressed: controller.client.isValidLogin
+        onPressed: controller.repository.clientStore.isValidLogin
             ? () {
                 var data = ClienteModel(
-                    email: controller.client.email,
-                    password: controller.client.password);
+                    email: controller.repository.clientStore.email,
+                    password: controller.repository.clientStore.password);
 
                 controller.loginUser(data).then((response) {
                   controller.recoveredUser();

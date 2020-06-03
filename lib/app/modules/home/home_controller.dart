@@ -1,5 +1,6 @@
 import 'package:app_schedule_now/app/models/client_model.dart';
 import 'package:app_schedule_now/app/repositories/client_repository.dart';
+import 'package:app_schedule_now/app/stores/client_store.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_controller.g.dart';
@@ -10,10 +11,11 @@ abstract class _HomeControllerBase with Store {
 
   final ClientRepository repository;
 
+
    _HomeControllerBase(this.repository);
 
    // Instancia do modelo de cliente
-  var client = ClienteModel();
+  //var client = ClienteModel();
 
 
   Future recoveredUser() async {
@@ -37,19 +39,19 @@ abstract class _HomeControllerBase with Store {
   }
 
   String validateNameController(){
-    return client.validateName();
+    return repository.clientStore.validateName();
   }
 
   String validateMailController(){
-    return client.validateMail();
+    return repository.clientStore.validateMail();
   }
 
   String validatePassController(){
-    return client.validatePass();
+    return repository.clientStore.validatePass();
   }
 
   String validatePhoneController(){
-    return client.validatePhone();
+    return repository.clientStore.validatePhone();
   }
 
   

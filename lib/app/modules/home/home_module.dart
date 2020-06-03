@@ -2,6 +2,7 @@ import 'package:app_schedule_now/app/modules/home/home_controller.dart';
 import 'package:app_schedule_now/app/modules/register/register_controller.dart';
 import 'package:app_schedule_now/app/modules/register/register_module.dart';
 import 'package:app_schedule_now/app/repositories/client_repository.dart';
+import 'package:app_schedule_now/app/stores/client_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:app_schedule_now/app/modules/home/home_page.dart';
 
@@ -10,7 +11,8 @@ class HomeModule extends ChildModule {
   List<Bind> get binds => [
         Bind((i) => HomeController(i.get<ClientRepository>())),
         Bind((i) => RegisterController(i.get<ClientRepository>())),
-        Bind((i) => ClientRepository())
+        Bind((i) => ClientRepository(i.get())),
+        Bind((i) => ClientStore())
         
       ];
 

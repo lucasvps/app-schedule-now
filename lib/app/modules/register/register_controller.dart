@@ -1,5 +1,6 @@
 import 'package:app_schedule_now/app/models/client_model.dart';
 import 'package:app_schedule_now/app/repositories/client_repository.dart';
+import 'package:app_schedule_now/app/stores/client_store.dart';
 import 'package:mobx/mobx.dart';
 
 part 'register_controller.g.dart';
@@ -9,6 +10,8 @@ class RegisterController = _RegisterControllerBase with _$RegisterController;
 abstract class _RegisterControllerBase with Store {
   final ClientRepository repository;
 
+  final ClientStore clientStore = ClientStore();
+
   _RegisterControllerBase(this.repository);
 
   // Lista de usuarios
@@ -16,7 +19,7 @@ abstract class _RegisterControllerBase with Store {
   ObservableFuture<List<ClienteModel>> clients;
 
   // Instancia do modelo de cliente
-  var client = ClienteModel();
+  //var client = ClienteModel();
 
   Future recoveredUser() async {
     return await repository.recoverUser();
@@ -35,18 +38,38 @@ abstract class _RegisterControllerBase with Store {
   void changeVisibility() => isObscure = !isObscure;
 
   String validateNameController(){
-    return client.validateName();
+    return clientStore.validateName();
   }
 
   String validateMailController(){
-    return client.validateMail();
+    return clientStore.validateMail();
   }
 
   String validatePassController(){
-    return client.validatePass();
+    return clientStore.validatePass();
   }
 
   String validatePhoneController(){
-    return client.validatePhone();
+    return clientStore.validatePhone();
   }
+
+  @observable
+  String name;
+  @action
+  setName(String value) => name = value;
+
+  @observable
+  String email;
+  @action
+  setMail(String value) => email = value;
+
+  @observable
+  String password;
+  @action
+  setPassword(String value) => password = value;
+
+  @observable
+  String phone;
+  @action
+  setPhone(String value) => phone = value;
 }
